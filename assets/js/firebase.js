@@ -21,11 +21,9 @@ function show() {
 }
 
 function comment_blog1() {
-  var time= firebase.database.ServerValue.TIMESTAMP;
   var name= document.getElementById("name").value;
   var comment= document.getElementById("comment").value;
     firebase.database().ref('Comment_blog1/' + name).set({
-          time : time,
           name : name,
           comment : comment
         }, function(error) {
@@ -39,11 +37,9 @@ function comment_blog1() {
 }
 
 function comment_blog2() {
-  var time= firebase.database.ServerValue.TIMESTAMP;
   var name= document.getElementById("name").value;
   var comment= document.getElementById("comment").value;
     firebase.database().ref('Comment_blog2/' + name).set({
-          time : time,
           name : name,
           comment : comment
         }, function(error) {
@@ -77,4 +73,24 @@ function show_comment_blog1() {
   
   // let demo_disappear = document.getElementById("comment-section");
   // demo_disappear.children[1].style.display = "none";
+}
+
+function show_comment_blog2() {
+  
+  firebase.database().ref('Comment_blog2/').once('value').then(function (snapshot) {
+    snapshot.forEach(function (child) {
+      let dc = document.getElementById("demo-comment").cloneNode(true);
+      dc.children[0].innerHTML = child.val().name;
+      dc.children[1].innerHTML = child.val().comment;
+      document.getElementById('comment-section').appendChild(dc);
+      dc.style.display = "block";
+      
+    });
+    
+  }, function (error) {
+    if (error) {
+    } else {
+      
+    }
+  });
 }
